@@ -27,6 +27,9 @@ public class Cli_assignment2 {
         //double[] balances = new double[0];
         //String[] customerIds = new String[0];
         String screen = DASHBOARD;
+        boolean valid;
+        String name;
+        double balance;
 
         do {
             final String APP_TITLE = String.format("%s%s%s",
@@ -65,9 +68,7 @@ public class Cli_assignment2 {
                     break;
                     case CREATE_ACCOUNT:
 
-                    boolean valid;
-                    String name;
-                    double deposit;
+                    
                     String id = "SDB-" + String.format("%05d", (customers.length + 1)); 
 
                     System.out.printf("New Customer ID: %s \n", id);
@@ -96,9 +97,9 @@ public class Cli_assignment2 {
                     do{
 
                         System.out.print("Initial Deposit (Rs.): ");
-                        deposit =SCANNER.nextDouble();SCANNER.nextLine();
+                        balance =SCANNER.nextDouble();SCANNER.nextLine();
 
-                        if(!(deposit>=5000.00)){
+                        if(!(balance>=5000.00)){
                             valid = false;
                             System.out.printf("%sInsufficient Amount. Initial deposit should be more than Rs.5000.00%s \n",COLOR_RED_BOLD, RESET);
     
@@ -114,7 +115,7 @@ public class Cli_assignment2 {
                     }
                     newCustomers[newCustomers.length -1][0] = id;
                     newCustomers[newCustomers.length -1][1] = name;
-                    newCustomers[newCustomers.length -1][2] = Double.toString(deposit);;
+                    newCustomers[newCustomers.length -1][2] = Double.toString(balance);;
                     
                    
                     customers = newCustomers;
@@ -128,30 +129,60 @@ public class Cli_assignment2 {
 
 
                     case DEPOSIT:
-                
-                    // do {
-                    //     valid = true;
-                    //     System.out.print("\tEnter New Customer ID: ");  // C-ac
-                    //     id = SCANNER.nextLine().toUpperCase().strip();
-                    //     if (id.isBlank()){
-                    //         System.out.printf(ERROR_MSG, "ID can't be empty");
-                    //         valid = false;
-                    //      }else if (!(id.startsWith("SDB-") || id.length() < 5)){
-                    //          System.out.printf(ERROR_MSG, "Invalid ID format");
-                    //          valid = false;
-                    //     }else{
-                    //         String number = id.substring(2);
-                    //         for (int i = 0; i < number.length(); i++) {
-                    //             if (!Character.isDigit(number.charAt(i))){
-                    //                 System.out.printf(ERROR_MSG, "Invalid ID format");
-                    //                 valid = false;
-                    //                 break;
-                    //             }
-                    //         }
-                            
-                    //     }
-                    // }while (!valid);
+                    idValidation:do {
+                        /*id validation*/
+                        valid = true;
+                        System.out.print("\tEnter Customert ID: ");
+                        id = SCANNER.nextLine().strip();
 
+                        
+                        if (id.isEmpty()) {
+                            valid = false;
+                            System.out.printf(ERROR_MSG, "ID Can't be empty");
+                            continue;
+                        }
+
+                        
+                        if (!id.startsWith("SDB-") || id.length() != 9) {
+                            valid = false;
+                            System.out.printf(ERROR_MSG, "Invalid ID format");
+                            continue;
+                        } else {
+                            // DEP-01 => 01
+                            String numberPart = id.substring(5);
+                            for (int i = 0; i < numberPart.length(); i++) {
+                                if (!Character.isDigit(numberPart.charAt(i))) {
+                                    valid = false;
+                                    System.out.printf(ERROR_MSG, "Invalid ID format");
+                                    continue idValidation;
+                                }
+                            }
+                        }
+                        
+                
+                }while(!valid);
+                //System.out.println("Current Balance :"+balance);
+
+
+                do {
+                    valid = true;
+                    System.out.print("Deposit Amount (Rs.): ");
+                    double depositAmount = SCANNER.nextDouble();
+                    SCANNER.nextLine();
+            
+                    if (depositAmount < 500.00) {
+                        valid = false;
+                        System.out.printf("%sInsufficient Amount. Deposit should be more than Rs.500.00%s \n", COLOR_RED_BOLD, RESET);
+                    } else {
+                        balance += depositAmount;
+                        customers[][2] = Double.toString(balance);
+                        System.out.println("Deposit was successful.");
+                        System.out.println("New Balance: " + balance);
+                    }
+                } while (!valid);
+
+
+                
 
                 }
 
