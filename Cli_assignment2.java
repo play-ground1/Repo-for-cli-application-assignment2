@@ -7,7 +7,7 @@ public class Cli_assignment2 {
         final String CLEAR = "\033[H\033[2J";
         final String COLOR_BLUE_BOLD = "\033[34;1m";
         final String COLOR_RED_BOLD = "\033[31;1m";
-        final String COLOR_GREEN_BOLD = "\033[33;1m";
+        //final String COLOR_GREEN_BOLD = "\033[33;1m";
 
         final String RESET = "\033[0m";
 
@@ -20,7 +20,7 @@ public class Cli_assignment2 {
         final String DELETE_ACCOUNT="Delete Account";
 
         final String ERROR_MSG = String.format("\t%s%s%s\n", COLOR_RED_BOLD, "%s", RESET);
-        final String SUCCESS_MSG = String.format("\t%s%s%s\n", COLOR_GREEN_BOLD, "%s", RESET);
+     //   final String SUCCESS_MSG = String.format("\t%s%s%s\n", COLOR_GREEN_BOLD, "%s", RESET);
 
 
         String[][] customers = new String[0][];
@@ -30,6 +30,7 @@ public class Cli_assignment2 {
         boolean valid;
         String name;
         double balance;
+        boolean foundCustomer=false;
 
         do {
             final String APP_TITLE = String.format("%s%s%s",
@@ -148,7 +149,7 @@ public class Cli_assignment2 {
                             System.out.printf(ERROR_MSG, "Invalid  format");
                             continue;
                         } else {
-                            // DEP-01 => 01
+                        
                             String numberPart = id.substring(5);
                             for (int i = 0; i < numberPart.length(); i++) {
                                 if (!Character.isDigit(numberPart.charAt(i))) {
@@ -163,8 +164,7 @@ public class Cli_assignment2 {
                 }while(!valid);
                 //System.out.println("Current Balance :"+balance);
 
-                boolean foundCustomer= false;
-
+              
                 for (int i = 0; i < customers.length; i++) {
                     if(customers[i][0].equals(id)){
                         foundCustomer=true;
@@ -217,7 +217,7 @@ public class Cli_assignment2 {
                             System.out.printf(ERROR_MSG, "Invalid format");
                             continue;
                         } else {
-                            // DEP-01 => 01
+                        
                             String numberPart = id.substring(5);
                             for (int i = 0; i < numberPart.length(); i++) {
                                 if (!Character.isDigit(numberPart.charAt(i))) {
@@ -262,9 +262,125 @@ public class Cli_assignment2 {
                     if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
                     screen = DASHBOARD;
                     break;  
+
+                    /*--------------------------------------------------------------------------- */
                     
                     case TRANSFER:
 
+                    idValidation:do {
+                        /*id validation*/
+                        valid = true;
+                        System.out.print("\tEnter from Account number: ");
+                        id = SCANNER.nextLine().strip();
+
+                        
+                        if (id.isEmpty()) {
+                            valid = false;
+                            System.out.printf(ERROR_MSG, "Account number Can't be empty");
+                            continue;
+                        }
+
+                        
+                        if (!id.startsWith("SDB-") || id.length() != 9) {
+                            valid = false;
+                            System.out.printf(ERROR_MSG, "Invalid format");
+                            continue;
+                        } else {
+                
+                            String numberPart = id.substring(5);
+                            for (int i = 0; i < numberPart.length(); i++) {
+                                if (!Character.isDigit(numberPart.charAt(i))) {
+                                    valid = false;
+                                    System.out.printf(ERROR_MSG, "Invalid format");
+                                    continue idValidation;
+                                }
+                            }
+                        }
+                 for (int i = 0; i < customers.length; i++) {
+                 if(customers[i][0].equals(id)){
+                        foundCustomer=true;
+                     do {
+                    valid = true;
+                    System.out.print("Enter Amount (Rs.): ");
+                    double transferAmount = SCANNER.nextDouble();
+                    SCANNER.nextLine();
+            
+                    if (transferAmount < 100.00) {
+                        valid = false;
+                        System.out.printf("%sInsufficient Amount. Transfer should be more than Rs.100.00%s \n", COLOR_RED_BOLD, RESET);
+                    } else {
+                        balance = Double.valueOf(customers[i][2]).doubleValue();
+                        balance -= transferAmount;
+                        customers[i][2] = Double.toString(balance);
+                        System.out.println("Transfer was successful.");
+                        System.out.println("From A/C Balance: " + balance);
+                    }
+                } while (!valid);         
+            }
+          }
+
+                        /* id validation for enter to account number */
+                        System.out.print("\tEnter to Account number: ");
+                        id = SCANNER.nextLine().strip();
+
+                        
+                        if (id.isEmpty()) {
+                            valid = false;
+                            System.out.printf(ERROR_MSG, "Account number Can't be empty");
+                            continue;
+                        }
+
+                        
+                        if (!id.startsWith("SDB-") || id.length() != 9) {
+                            valid = false;
+                            System.out.printf(ERROR_MSG, "Invalid format");
+                            continue;
+                        } else {
+                            
+                            String numberPart = id.substring(5);
+                            for (int i = 0; i < numberPart.length(); i++) {
+                                if (!Character.isDigit(numberPart.charAt(i))) {
+                                    valid = false;
+                                    System.out.printf(ERROR_MSG, "Invalid format");
+                                    continue idValidation;
+                                }
+                            }
+                        }
+
+                    for (int i = 0; i < customers.length; i++) {
+                    if(customers[i][0].equals(id)){
+                        foundCustomer=true;
+                    do {
+                    valid = true;
+                    System.out.print("Enter Amount (Rs.): ");
+                    double transferAmount = SCANNER.nextDouble();
+                    SCANNER.nextLine();
+            
+                    if (transferAmount < 100.00) {
+                        valid = false;
+                        System.out.printf("%sInsufficient Amount. Transfer should be more than Rs.100.00%s \n", COLOR_RED_BOLD, RESET);
+                    } else {
+                        balance = Double.valueOf(customers[i][2]).doubleValue();
+                        balance = transferAmount;
+                        customers[i][2] = Double.toString(balance);
+                        System.out.println("Transfer was successful.");
+                        System.out.println("From A/C Balance: " + balance);
+                    }
+                } while (!valid);         
+            }
+          }
+                
+                }while(!valid);
+                
+                 
+             
+                    System.out.println();
+                    System.out.print("Do you want to continue (Y/n)? ");
+                    if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
+                    screen = DASHBOARD;
+                    break;  
+                    
+                
 
 
 
