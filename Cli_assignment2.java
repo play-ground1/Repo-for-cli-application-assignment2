@@ -163,8 +163,12 @@ public class Cli_assignment2 {
                 }while(!valid);
                 //System.out.println("Current Balance :"+balance);
 
+                boolean foundCustomer= false;
 
-                do {
+                for (int i = 0; i < customers.length; i++) {
+                    if(customers[i][0].equals(id)){
+                        foundCustomer=true;
+                    do {
                     valid = true;
                     System.out.print("Deposit Amount (Rs.): ");
                     double depositAmount = SCANNER.nextDouble();
@@ -174,13 +178,22 @@ public class Cli_assignment2 {
                         valid = false;
                         System.out.printf("%sInsufficient Amount. Deposit should be more than Rs.500.00%s \n", COLOR_RED_BOLD, RESET);
                     } else {
+                        balance = Double.valueOf(customers[i][2]).doubleValue();
                         balance += depositAmount;
-                        customers[][2] = Double.toString(balance);
+                        customers[i][2] = Double.toString(balance);
                         System.out.println("Deposit was successful.");
                         System.out.println("New Balance: " + balance);
                     }
                 } while (!valid);
 
+            }
+          }
+                    
+                    System.out.println();
+                    System.out.print(" added sucessfully. Do you want to add new customer (Y/n)? ");
+                    if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
+                    screen = DASHBOARD;
+                    break;
 
                 
 
