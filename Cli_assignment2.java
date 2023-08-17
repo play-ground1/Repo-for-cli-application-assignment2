@@ -170,6 +170,75 @@ public class Cli_assignment2 {
                         foundCustomer=true;
                     do {
                     valid = true;
+                    System.out.print("Withdraw Amount (Rs.): ");
+                    double withdrawAmount = SCANNER.nextDouble();
+                    SCANNER.nextLine();
+            
+                    if (withdrawAmount >= 100.00) {
+                        valid = false;
+                        System.out.printf("%sInsufficient Amount. Withdraw amount should be more than Rs.500.00%s \n", COLOR_RED_BOLD, RESET);
+                    } else {
+                        balance = Double.valueOf(customers[i][2]).doubleValue();
+                        balance -= withdrawAmount;
+                        customers[i][2] = Double.toString(balance);
+                        System.out.println("Withdraw was successful.");
+                        System.out.println("New Balance: " + balance);
+                    }
+                } while (!valid);         
+            }
+          }
+                    
+                    System.out.println();
+                    System.out.print("Do you want to add new customer (Y/n)? ");
+                    if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
+                    screen = DASHBOARD;
+                    break;  
+                    
+
+                    // withdraw
+                    case WITHDRAWS:
+
+                    idValidation:do {
+                        /*id validation*/
+                        valid = true;
+                        System.out.print("\tEnter Customert ID: ");
+                        id = SCANNER.nextLine().strip();
+
+                        
+                        if (id.isEmpty()) {
+                            valid = false;
+                            System.out.printf(ERROR_MSG, "ID Can't be empty");
+                            continue;
+                        }
+
+                        
+                        if (!id.startsWith("SDB-") || id.length() != 9) {
+                            valid = false;
+                            System.out.printf(ERROR_MSG, "Invalid ID format");
+                            continue;
+                        } else {
+                            // DEP-01 => 01
+                            String numberPart = id.substring(5);
+                            for (int i = 0; i < numberPart.length(); i++) {
+                                if (!Character.isDigit(numberPart.charAt(i))) {
+                                    valid = false;
+                                    System.out.printf(ERROR_MSG, "Invalid ID format");
+                                    continue idValidation;
+                                }
+                            }
+                        }
+                        
+                
+                }while(!valid);
+                //System.out.println("Current Balance :"+balance);
+
+
+
+                for (int i = 0; i < customers.length; i++) {
+                    if(customers[i][0].equals(id)){
+                        foundCustomer=true;
+                    do {
+                    valid = true;
                     System.out.print("Deposit Amount (Rs.): ");
                     double depositAmount = SCANNER.nextDouble();
                     SCANNER.nextLine();
@@ -184,8 +253,7 @@ public class Cli_assignment2 {
                         System.out.println("Deposit was successful.");
                         System.out.println("New Balance: " + balance);
                     }
-                } while (!valid);
-
+                } while (!valid);         
             }
           }
                     
@@ -193,9 +261,10 @@ public class Cli_assignment2 {
                     System.out.print(" added sucessfully. Do you want to add new customer (Y/n)? ");
                     if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
                     screen = DASHBOARD;
-                    break;
+                    break;  
+                    
+                    
 
-                
 
                 }
 
