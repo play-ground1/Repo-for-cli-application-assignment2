@@ -170,18 +170,18 @@ public class Cli_assignment2 {
                         foundCustomer=true;
                     do {
                     valid = true;
-                    System.out.print("Withdraw Amount (Rs.): ");
-                    double withdrawAmount = SCANNER.nextDouble();
+                    System.out.print("Deposit Amount (Rs.): ");
+                    double depositAmount = SCANNER.nextDouble();
                     SCANNER.nextLine();
             
-                    if (withdrawAmount >= 100.00) {
+                    if (depositAmount < 500.00) {
                         valid = false;
-                        System.out.printf("%sInsufficient Amount. Withdraw amount should be more than Rs.500.00%s \n", COLOR_RED_BOLD, RESET);
+                        System.out.printf("%sInsufficient Amount. Deposit should be more than Rs.500.00%s \n", COLOR_RED_BOLD, RESET);
                     } else {
                         balance = Double.valueOf(customers[i][2]).doubleValue();
-                        balance -= withdrawAmount;
+                        balance += depositAmount;
                         customers[i][2] = Double.toString(balance);
-                        System.out.println("Withdraw was successful.");
+                        System.out.println("Deposit was successful.");
                         System.out.println("New Balance: " + balance);
                     }
                 } while (!valid);         
@@ -189,7 +189,7 @@ public class Cli_assignment2 {
           }
                     
                     System.out.println();
-                    System.out.print("Do you want to add new customer (Y/n)? ");
+                    System.out.print("Do you want to continue (Y/n)? ");
                     if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
                     screen = DASHBOARD;
                     break;  
@@ -197,7 +197,7 @@ public class Cli_assignment2 {
 
                     // withdraw
                     case WITHDRAWS:
-
+                    
                     idValidation:do {
                         /*id validation*/
                         valid = true;
@@ -239,18 +239,18 @@ public class Cli_assignment2 {
                         foundCustomer=true;
                     do {
                     valid = true;
-                    System.out.print("Deposit Amount (Rs.): ");
-                    double depositAmount = SCANNER.nextDouble();
+                    System.out.print("Withdraw Amount (Rs.): ");
+                    double withdrawAmount = SCANNER.nextDouble();
                     SCANNER.nextLine();
             
-                    if (depositAmount < 500.00) {
+                    if (withdrawAmount < 100.00) {
                         valid = false;
-                        System.out.printf("%sInsufficient Amount. Deposit should be more than Rs.500.00%s \n", COLOR_RED_BOLD, RESET);
+                        System.out.printf("%sInsufficient Amount. Withdraw should be more than Rs.100.00%s \n", COLOR_RED_BOLD, RESET);
                     } else {
                         balance = Double.valueOf(customers[i][2]).doubleValue();
-                        balance += depositAmount;
+                        balance -= withdrawAmount;
                         customers[i][2] = Double.toString(balance);
-                        System.out.println("Deposit was successful.");
+                        System.out.println("Withdraw was successful.");
                         System.out.println("New Balance: " + balance);
                     }
                 } while (!valid);         
@@ -258,11 +258,12 @@ public class Cli_assignment2 {
           }
                     
                     System.out.println();
-                    System.out.print(" added sucessfully. Do you want to add new customer (Y/n)? ");
+                    System.out.print("Do you want to continue (Y/n)? ");
                     if (SCANNER.nextLine().strip().toUpperCase().equals("Y")) continue;
                     screen = DASHBOARD;
                     break;  
                     
+                    case TRANSFER:
                     
 
 
