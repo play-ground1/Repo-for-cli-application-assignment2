@@ -132,20 +132,20 @@ public class Cli_assignment2 {
                     idValidation:do {
                         /*id validation*/
                         valid = true;
-                        System.out.print("\tEnter Customert ID: ");
+                        System.out.print("\tEnter Customert Account Number: ");
                         id = SCANNER.nextLine().strip();
 
                         
                         if (id.isEmpty()) {
                             valid = false;
-                            System.out.printf(ERROR_MSG, "ID Can't be empty");
+                            System.out.printf(ERROR_MSG, "Account number Can't be empty");
                             continue;
                         }
 
                         
                         if (!id.startsWith("SDB-") || id.length() != 9) {
                             valid = false;
-                            System.out.printf(ERROR_MSG, "Invalid ID format");
+                            System.out.printf(ERROR_MSG, "Invalid  format");
                             continue;
                         } else {
                             // DEP-01 => 01
@@ -201,20 +201,20 @@ public class Cli_assignment2 {
                     idValidation:do {
                         /*id validation*/
                         valid = true;
-                        System.out.print("\tEnter Customert ID: ");
+                        System.out.print("\tEnter Customert Account number: ");
                         id = SCANNER.nextLine().strip();
 
                         
                         if (id.isEmpty()) {
                             valid = false;
-                            System.out.printf(ERROR_MSG, "ID Can't be empty");
+                            System.out.printf(ERROR_MSG, "Account number Can't be empty");
                             continue;
                         }
 
                         
                         if (!id.startsWith("SDB-") || id.length() != 9) {
                             valid = false;
-                            System.out.printf(ERROR_MSG, "Invalid ID format");
+                            System.out.printf(ERROR_MSG, "Invalid format");
                             continue;
                         } else {
                             // DEP-01 => 01
@@ -222,7 +222,7 @@ public class Cli_assignment2 {
                             for (int i = 0; i < numberPart.length(); i++) {
                                 if (!Character.isDigit(numberPart.charAt(i))) {
                                     valid = false;
-                                    System.out.printf(ERROR_MSG, "Invalid ID format");
+                                    System.out.printf(ERROR_MSG, "Invalid format");
                                     continue idValidation;
                                 }
                             }
@@ -264,7 +264,8 @@ public class Cli_assignment2 {
                     break;  
                     
                     case TRANSFER:
-                    
+
+
 
 
                 }
